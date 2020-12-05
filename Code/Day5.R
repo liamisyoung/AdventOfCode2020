@@ -7,35 +7,19 @@ data <- read_lines("Data/Day5.txt")
 
 # Write function to get row and column
 get_seat <- function(pass) {
-  # Initial sequence of valid rows
-  valid_rows <- seq(from = 0, to = 127, by = 1)
   
-  # Cut in half for each letter, depending on front or back
-  for (i in 1:7) {
-    if (substring(pass, i, i) == "B") {
-      valid_rows <-
-        valid_rows[valid_rows >= ((length(valid_rows) / 2) + min(valid_rows))]
-    } else {
-      valid_rows <-
-        valid_rows[valid_rows < ((length(valid_rows) / 2) + min(valid_rows))]
-    }
-  }
+  # Replace letters with binary
+  pass <- pass %>%
+    str_replace_all("F", "0") %>%
+    str_replace_all("B", "1") %>%
+    str_replace_all("L", "0") %>%
+    str_replace_all("R", "1")
+
+  # Convert binary strings to int
+  row <- strtoi(substring(pass, 1, 7), base = 2)
+  col <- strtoi(substring(pass, 8, 10), base = 2)
   
-  # Initial sequence of valid cols
-  valid_cols <- seq(from = 0, to = 7, by = 1)
-  
-  # Cut in half for each letter, depending on left or right
-  for (i in 8:10) {
-    if (substring(pass, i, i) == "R") {
-      valid_cols <-
-        valid_cols[valid_cols >= ((length(valid_cols) / 2) + min(valid_cols))]
-    } else {
-      valid_cols <-
-        valid_cols[valid_cols < ((length(valid_cols) / 2) + min(valid_cols))]
-    }
-  }
-  
-  return(valid_rows * 8 + valid_cols)
+  return(row * 8 + col)
 }
 
 # Apply function across all boarding passes and get max
