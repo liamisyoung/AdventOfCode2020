@@ -5,7 +5,7 @@ data <- read_lines("Data/Day8.txt") %>%
   as_tibble() %>%
   separate(value,
            into = c("instr", "val"),
-           sep = " ") %>% 
+           sep = " ") %>%
   mutate(val = as.integer(val))
 
 
@@ -17,7 +17,8 @@ run_loop <- function(data) {
   exit <- FALSE
   row <- 1
   total <- 0
-  visited <- c() # Array of "visited" rows on our journey through the gameboy
+  visited <-
+    c() # Array of "visited" rows on our journey through the gameboy
   
   while (exit == FALSE) {
     # Check to see if we've already visited the row, if so exit with convergence -1 i.e. loop
@@ -30,10 +31,9 @@ run_loop <- function(data) {
       convergence = 1
       # If not, plow on.
     } else {
-      
       # Get instruction and value for the row
-      step_instr <- data[row, ]$instr
-      step_val <- data[row, ]$val
+      step_instr <- data[row,]$instr
+      step_val <- data[row,]$val
       
       # Add the row to the visited list, we don't like going to see the same one twice.
       visited <- c(visited, row)
@@ -65,7 +65,7 @@ nop_ind <- which(data$instr == "nop")
 # One by one change them and run the loop, checking for convergence == 1
 for (i in 1:length(nop_ind)) {
   data_temp <- data
-  data_temp[nop_ind[i], ]$instr <- "jmp"
+  data_temp[nop_ind[i],]$instr <- "jmp"
   
   val <- run_loop(data_temp)
   
@@ -82,11 +82,11 @@ jmp_ind <- which(data$instr == "jmp")
 # One by one change them and run the loop, checking for convergence == 1
 for (i in 1:length(jmp_ind)) {
   data_temp <- data
-  data_temp[jmp_ind[i],]$instr <- "nop"
+  data_temp[jmp_ind[i], ]$instr <- "nop"
   
   val <- run_loop(data_temp)
   
-  if(val[2] == 1) {
+  if (val[2] == 1) {
     print(val)
   }
 }
