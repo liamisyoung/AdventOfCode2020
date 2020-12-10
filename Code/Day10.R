@@ -51,5 +51,9 @@ for (i in 2:length(vals)) {
   n[val] <- sum(n[prev_vals])
 }
 
-t2_ans <- n[length(n)]
+# Bind ways column on to dataframe, removing 0's and the first value
+data <- data %>% 
+  bind_cols(ways = n[n!=0][-1])
+
+t2_ans <- data$ways[nrow(data)]
 
