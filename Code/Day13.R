@@ -62,6 +62,7 @@ t1 <- 601 * (1002468 - 1002461)
 
 # Finally solved with a hybrid of idea 1
 
+tic()
 # Get the minutes each bus should be shifted, then start with the biggest
 bus_rem_df <-
   tibble(bus = bus, rem = seq(
@@ -91,3 +92,4 @@ for (i in 2:nrow(bus_rem_df)) {
 
 # Get the answer
 t2_ans <- start
+toc()
